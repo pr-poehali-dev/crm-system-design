@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Icon from '@/components/ui/icon';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import DashboardSection from '@/components/crm/DashboardSection';
 import ClientsSection from '@/components/crm/ClientsSection';
 import DealsSection from '@/components/crm/DealsSection';
@@ -14,6 +15,7 @@ import SettingsSection from '@/components/crm/SettingsSection';
 
 const CRM = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const stats = [
     { title: 'Общая выручка', value: '₽2,450,000', change: '+12.5%', icon: 'TrendingUp' },
@@ -77,60 +79,82 @@ const CRM = () => {
     { id: 'settings', label: 'Настройки', icon: 'Settings' },
   ];
 
+  const handleMenuItemClick = (id: string) => {
+    setActiveSection(id);
+    setMobileMenuOpen(false);
+  };
+
+  const MenuContent = () => (
+    <>
+      <div className="p-6 border-b border-sidebar-border">
+        <h1 className="text-2xl font-bold flex items-center gap-2">
+          <Icon name="Building2" size={28} />
+          CRM System
+        </h1>
+      </div>
+      <nav className="p-4 space-y-1">
+        {menuItems.map((item) => (
+          <button
+            key={item.id}
+            onClick={() => handleMenuItemClick(item.id)}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-md transition-colors ${
+              activeSection === item.id
+                ? 'bg-sidebar-accent text-sidebar-accent-foreground'
+                : 'hover:bg-sidebar-accent/50'
+            }`}
+          >
+            <Icon name={item.icon} size={20} />
+            <span className="font-medium">{item.label}</span>
+          </button>
+        ))}
+      </nav>
+    </>
+  );
+
   return (
     <div className="flex h-screen bg-background">
-      <aside className="w-64 bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
-        <div className="p-6 border-b border-sidebar-border">
-          <h1 className="text-2xl font-bold flex items-center gap-2">
-            <Icon name="Building2" size={28} />
-            CRM System
-          </h1>
-        </div>
-        <nav className="p-4 space-y-1">
-          {menuItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveSection(item.id)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-md transition-colors ${
-                activeSection === item.id
-                  ? 'bg-sidebar-accent text-sidebar-accent-foreground'
-                  : 'hover:bg-sidebar-accent/50'
-              }`}
-            >
-              <Icon name={item.icon} size={20} />
-              <span className="font-medium">{item.label}</span>
-            </button>
-          ))}
-        </nav>
+      <aside className="hidden lg:block w-64 bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
+        <MenuContent />
       </aside>
 
       <main className="flex-1 overflow-auto">
-        <header className="bg-card border-b border-border p-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
+        <header className="bg-card border-b border-border p-4 flex items-center justify-between sticky top-0 z-10">
+          <div className="flex items-center gap-4 flex-1">
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="lg:hidden">
+                  <Icon name="Menu" size={24} />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-64 p-0 bg-sidebar text-sidebar-foreground">
+                <MenuContent />
+              </SheetContent>
+            </Sheet>
+            
             <Input
               placeholder="Поиск..."
-              className="w-80"
+              className="w-full max-w-md"
               prefix={<Icon name="Search" size={18} />}
             />
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 md:gap-3">
             <Button variant="ghost" size="icon" className="relative">
               <Icon name="Bell" size={20} />
               <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full" />
             </Button>
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" className="hidden sm:flex">
               <Icon name="Settings" size={20} />
             </Button>
-            <div className="flex items-center gap-2 pl-3 border-l">
+            <div className="hidden sm:flex items-center gap-2 pl-3 border-l">
               <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-medium">
                 АС
               </div>
-              <span className="text-sm font-medium">Администратор</span>
+              <span className="text-sm font-medium hidden md:inline">Администратор</span>
             </div>
           </div>
         </header>
 
-        <div className="p-6">
+        <div className="p-4 md:p-6">
           {activeSection === 'dashboard' && <DashboardSection stats={stats} tasks={tasks} deals={deals} />}
           {activeSection === 'clients' && <ClientsSection clients={clients} />}
           {activeSection === 'deals' && <DealsSection deals={deals} />}

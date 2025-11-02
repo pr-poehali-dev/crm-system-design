@@ -4,9 +4,9 @@ import { Progress } from '@/components/ui/progress';
 const AnalyticsSection = () => {
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold">Аналитика</h2>
+      <h2 className="text-2xl md:text-3xl font-bold">Аналитика</h2>
       
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
             <CardTitle>Динамика продаж</CardTitle>

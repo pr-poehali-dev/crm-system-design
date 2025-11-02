@@ -34,15 +34,15 @@ interface ClientsSectionProps {
 const ClientsSection = ({ clients }: ClientsSectionProps) => {
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold">Клиенты</h2>
-        <Button>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <h2 className="text-2xl md:text-3xl font-bold">Клиенты</h2>
+        <Button size="sm" className="w-full sm:w-auto">
           <Icon name="Plus" size={18} className="mr-2" />
           Добавить клиента
         </Button>
       </div>
 
-      <div className="flex gap-3">
+      <div className="flex flex-col sm:flex-row gap-3">
         <Input placeholder="Поиск клиентов..." className="max-w-sm" />
         <Select defaultValue="all">
           <SelectTrigger className="w-40">
@@ -57,7 +57,7 @@ const ClientsSection = ({ clients }: ClientsSectionProps) => {
       </div>
 
       <Card>
-        <CardContent className="p-0">
+        <CardContent className="p-0 overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>

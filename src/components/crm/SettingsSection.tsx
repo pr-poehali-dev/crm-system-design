@@ -13,7 +13,7 @@ import {
 const SettingsSection = () => {
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold">Настройки</h2>
+      <h2 className="text-2xl md:text-3xl font-bold">Настройки</h2>
 
       <Tabs defaultValue="general" className="w-full">
         <TabsList>

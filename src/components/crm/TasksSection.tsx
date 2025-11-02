@@ -17,15 +17,15 @@ interface TasksSectionProps {
 const TasksSection = ({ tasks }: TasksSectionProps) => {
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold">Задачи</h2>
-        <Button>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <h2 className="text-2xl md:text-3xl font-bold">Задачи</h2>
+        <Button size="sm" className="w-full sm:w-auto">
           <Icon name="Plus" size={18} className="mr-2" />
           Создать задачу
         </Button>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <Card>
           <CardHeader>
             <CardTitle className="text-base">Ожидают выполнения</CardTitle>

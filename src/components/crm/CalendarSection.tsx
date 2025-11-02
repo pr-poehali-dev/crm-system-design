@@ -27,22 +27,22 @@ interface CalendarSectionProps {
 const CalendarSection = ({ meetings, reminders }: CalendarSectionProps) => {
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold">Календарь встреч</h2>
-        <div className="flex gap-2">
-          <Button variant="outline">
-            <Icon name="Download" size={18} className="mr-2" />
-            Экспорт
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <h2 className="text-2xl md:text-3xl font-bold">Календарь встреч</h2>
+        <div className="flex gap-2 w-full sm:w-auto">
+          <Button variant="outline" size="sm" className="flex-1 sm:flex-none">
+            <Icon name="Download" size={18} className="sm:mr-2" />
+            <span className="hidden sm:inline">Экспорт</span>
           </Button>
-          <Button>
-            <Icon name="Plus" size={18} className="mr-2" />
-            Новая встреча
+          <Button size="sm" className="flex-1 sm:flex-none">
+            <Icon name="Plus" size={18} className="sm:mr-2" />
+            <span className="hidden sm:inline">Новая встреча</span>
           </Button>
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
-        <div className="col-span-2 space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 space-y-6">
           <Card>
             <CardHeader>
               <div className="flex items-center justify-between">

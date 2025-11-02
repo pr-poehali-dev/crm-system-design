@@ -21,15 +21,15 @@ interface DashboardSectionProps {
 const DashboardSection = ({ stats, tasks, deals }: DashboardSectionProps) => {
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold">Дашборд</h2>
-        <Button>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <h2 className="text-2xl md:text-3xl font-bold">Дашборд</h2>
+        <Button size="sm" className="w-full sm:w-auto">
           <Icon name="Download" size={18} className="mr-2" />
           Экспорт отчета
         </Button>
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, idx) => (
           <Card key={idx} className="hover:shadow-md transition-shadow">
             <CardHeader className="pb-2">
@@ -48,7 +48,7 @@ const DashboardSection = ({ stats, tasks, deals }: DashboardSectionProps) => {
         ))}
       </div>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
             <CardTitle>Воронка продаж</CardTitle>
@@ -112,15 +112,15 @@ const DashboardSection = ({ stats, tasks, deals }: DashboardSectionProps) => {
           <CardTitle>Последние сделки</CardTitle>
           <CardDescription>Обновлено только что</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Название</TableHead>
-                <TableHead>Клиент</TableHead>
-                <TableHead>Сумма</TableHead>
-                <TableHead>Этап</TableHead>
-                <TableHead>Вероятность</TableHead>
+                <TableHead className="whitespace-nowrap">Название</TableHead>
+                <TableHead className="whitespace-nowrap">Клиент</TableHead>
+                <TableHead className="whitespace-nowrap">Сумма</TableHead>
+                <TableHead className="whitespace-nowrap hidden md:table-cell">Этап</TableHead>
+                <TableHead className="whitespace-nowrap hidden lg:table-cell">Вероятность</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -128,9 +128,9 @@ const DashboardSection = ({ stats, tasks, deals }: DashboardSectionProps) => {
                 <TableRow key={deal.id}>
                   <TableCell className="font-medium">{deal.title}</TableCell>
                   <TableCell>{deal.client}</TableCell>
-                  <TableCell>₽{deal.amount.toLocaleString()}</TableCell>
-                  <TableCell>{getStageName(deal.stage)}</TableCell>
-                  <TableCell>
+                  <TableCell className="whitespace-nowrap">₽{deal.amount.toLocaleString()}</TableCell>
+                  <TableCell className="hidden md:table-cell">{getStageName(deal.stage)}</TableCell>
+                  <TableCell className="hidden lg:table-cell">
                     <div className="flex items-center gap-2">
                       <Progress value={deal.probability} className="h-2 w-20" />
                       <span className="text-sm">{deal.probability}%</span>
